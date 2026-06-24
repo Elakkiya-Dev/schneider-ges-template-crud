@@ -124,8 +124,9 @@
           Reset
         </button>
         <button
-          type="submit"
+          type="button"
           [disabled]="form.invalid"
+          (click)="submit()"
           class="inline-flex min-w-26 cursor-pointer items-center justify-center rounded-lg border border-transparent bg-schneider px-5 py-3 text-sm font-semibold leading-none text-white transition-colors duration-150 hover:bg-schneider-dark active:bg-schneider-darker disabled:cursor-not-allowed disabled:bg-schneider-disabled"
         >
           {{ submitLabel }}
