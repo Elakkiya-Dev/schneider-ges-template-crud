@@ -1,0 +1,136 @@
+<p-dialog
+  [visible]="visible"
+  (visibleChange)="onVisibleChange($event)"
+  [modal]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [closable]="false"
+  [dismissableMask]="true"
+  [style]="{ width: '560px' }"
+  class="ges-dialog"
+>
+  <ng-template pTemplate="header">
+    <div class="flex w-full items-center justify-between">
+      <span class="text-19 font-extrabold text-schneider">{{ title }}</span>
+      <button
+        class="inline-flex h-7 w-7 cursor-pointer items-center justify-center rounded-md border-none bg-transparent text-17 text-subtle transition-colors duration-150 hover:bg-gray-100 hover:text-gray-600"
+        type="button"
+        (click)="close()"
+        aria-label="Close"
+      >
+        <i class="pi pi-times"></i>
+      </button>
+    </div>
+  </ng-template>
+
+  <form [formGroup]="form" class="flex flex-col gap-4.5 p-5.5" (ngSubmit)="submit()">
+    <div class="flex flex-col gap-2">
+      <label for="project" class="text-sm font-bold text-gray-700">
+        Project Name: <span class="text-red-500">*</span>
+      </label>
+      <input
+        id="project"
+        type="text"
+        pInputText
+        formControlName="project"
+        placeholder="Enter project name"
+        [class.is-invalid]="isInvalid('project')"
+        autocomplete="off"
+      />
+      @if (isInvalid('project')) {
+        <small class="text-xs font-semibold text-red-500">
+          Project name is required.
+        </small>
+      }
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="customer" class="text-sm font-bold text-gray-700">
+        Customer Name: <span class="text-red-500">*</span>
+      </label>
+      <input
+        id="customer"
+        type="text"
+        pInputText
+        formControlName="customer"
+        placeholder="Enter customer name"
+        [class.is-invalid]="isInvalid('customer')"
+        autocomplete="off"
+      />
+      @if (isInvalid('customer')) {
+        <small class="text-xs font-semibold text-red-500">
+          Customer name is required.
+        </small>
+      }
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="product" class="text-sm font-bold text-gray-700">
+        Product: <span class="text-red-500">*</span>
+      </label>
+      <p-select
+        inputId="product"
+        formControlName="product"
+        [options]="products"
+        placeholder="Select product"
+        appendTo="body"
+        class="ges-select"
+        [class.is-invalid]="isInvalid('product')"
+      />
+      @if (isInvalid('product')) {
+        <small class="text-xs font-semibold text-red-500">
+          Product is required.
+        </small>
+      }
+    </div>
+
+    <div class="flex flex-col gap-2">
+      <label for="status" class="text-sm font-bold text-gray-700">
+        Template Status: <span class="text-red-500">*</span>
+      </label>
+      <p-select
+        inputId="status"
+        formControlName="status"
+        [options]="statuses"
+        placeholder="Select status"
+        appendTo="body"
+        class="ges-select"
+        [class.is-invalid]="isInvalid('status')"
+      />
+      @if (isInvalid('status')) {
+        <small class="text-xs font-semibold text-red-500">
+          Template status is required.
+        </small>
+      }
+    </div>
+  </form>
+
+  <ng-template pTemplate="footer">
+    <div class="flex justify-end gap-3">
+      @if (isView) {
+        <button
+          class="inline-flex min-w-26 cursor-pointer items-center justify-center rounded-lg border border-transparent bg-schneider px-5 py-3 text-sm font-semibold leading-none text-white transition-colors duration-150 hover:bg-schneider-dark active:bg-schneider-darker"
+          type="button"
+          (click)="close()"
+        >
+          Close
+        </button>
+      } @else {
+        <button
+          class="inline-flex min-w-26 cursor-pointer items-center justify-center rounded-lg border border-gray-300 bg-white px-5 py-3 text-sm font-semibold leading-none text-gray-500 transition-colors duration-150 hover:border-gray-400 hover:bg-gray-50"
+          type="button"
+          (click)="reset()"
+        >
+          Reset
+        </button>
+        <button
+          type="submit"
+          [disabled]="form.invalid"
+          class="inline-flex min-w-26 cursor-pointer items-center justify-center rounded-lg border border-transparent bg-schneider px-5 py-3 text-sm font-semibold leading-none text-white transition-colors duration-150 hover:bg-schneider-dark active:bg-schneider-darker disabled:cursor-not-allowed disabled:bg-schneider-disabled"
+        >
+          {{ submitLabel }}
+        </button>
+      }
+    </div>
+  </ng-template>
+</p-dialog>
